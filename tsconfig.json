@@ -1,0 +1,30 @@
+{
+  "compilerOptions": {
+    "target": "ES2015",
+    "module": "commonjs",
+    // "allowJs": true,
+    "outDir": "dist",
+    // "downlevelIteration": true,
+    "strict": true,
+    // "noImplicitAny": true,
+    // "moduleResolution": "Node",
+    "esModuleInterop": true,
+    // "resolveJsonModule": true,
+    "sourceMap": false,
+    // "skipLibCheck": true,
+    "forceConsistentCasingInFileNames": true,
+
+    // "allowUnreachableCode": false,
+    // "allowUnusedLabels": false,
+    // "declaration": true,
+    // "noEmitOnError": true,
+    // "noFallthroughCasesInSwitch": true,
+    "strictPropertyInitialization": false,
+    "useUnknownInCatchVariables": false
+    // "noImplicitReturns": true,
+    // "pretty": true,
+    // "rootDir": "."
+  },
+  "include": ["source/**/*.ts", "test/**/*.test.ts"],
+  "exclude": ["node_modules"]
+}
