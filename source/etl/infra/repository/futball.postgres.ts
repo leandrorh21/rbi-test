@@ -1,8 +1,10 @@
 import { CompetitionValue } from "../../domain/competition.value";
+import { CompetitionTeamValue } from "../../domain/competitionTeam.value";
 import { EtlPostgresRepository } from "../../domain/etlRepositoryPostgres";
 import { PlayerValue } from "../../domain/player.value";
 import { TeamValue } from "../../domain/team.value";
 import { Competition, Player, Team } from "../modelpostgres";
+import CompetitionTeam from "../modelpostgres/competition-team.model";
 
 export class PostgresEtlRepository implements EtlPostgresRepository {
   async saveCompetition(competition: CompetitionValue): Promise<void> {
@@ -17,27 +19,11 @@ export class PostgresEtlRepository implements EtlPostgresRepository {
     await Player.bulkCreate(players, { updateOnDuplicate: ["name"] });
   }
 
-  //   async createMeal(meal: MealEntity): Promise<void> {
-  //     await Meal.create(meal);
-  //   }
-  //   async getMeals(chefID: string): Promise<MealEntity[]> {
-  //     const meals = await Meal.findAll({
-  //       where: {
-  //         ...(chefID && { chefID }),
-  //       },
-  //       attributes: ["name", "rate"],
-  //       include: [{ model: User, as: "Chef", attributes: ["name"] }],
-  //     });
-  //     return meals;
-  //   }
-  //   async rateMeal(id: string, rate: number): Promise<void> {
-  //     await Meal.update(
-  //       { rate },
-  //       {
-  //         where: {
-  //           id,
-  //         },
-  //       }
-  //     );
-  //   }
+  async saveCompetitionTeam(
+    competitionTeams: CompetitionTeamValue[]
+  ): Promise<void> {
+    await CompetitionTeam.bulkCreate(competitionTeams, {
+      updateOnDuplicate: ["teamID", "competitionID"],
+    });
+  }
 }

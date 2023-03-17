@@ -1,4 +1,5 @@
 import { CompetitionValue } from "../domain/competition.value";
+import { CompetitionTeamValue } from "../domain/competitionTeam.value";
 import { EtlPostgresRepository } from "../domain/etlRepositoryPostgres";
 import { PlayerValue } from "../domain/player.value";
 import { TeamValue } from "../domain/team.value";
@@ -21,5 +22,11 @@ export class EtlPostgresUseCase {
 
   public savePlayerInfo = async (players: PlayerValue[]): Promise<void> => {
     await this.etlPostgresRepository.savePlayer(players);
+  };
+
+  public saveCompetitionTeamInfo = async (
+    competitionTeams: CompetitionTeamValue[]
+  ): Promise<void> => {
+    await this.etlPostgresRepository.saveCompetitionTeam(competitionTeams);
   };
 }

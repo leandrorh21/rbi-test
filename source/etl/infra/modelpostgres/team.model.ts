@@ -7,6 +7,8 @@ import {
 } from "sequelize";
 
 import sequelizeConnection from "../../../common/dbConnection";
+import CompetitionTeam from "./competition-team.model";
+import Competition from "./competition.model";
 
 class Team extends Model<InferAttributes<Team>, InferCreationAttributes<Team>> {
   declare id: CreationOptional<number>;
@@ -52,5 +54,14 @@ Team.init(
     tableName: "team",
   }
 );
+
+Team.belongsToMany(Competition, {
+  through: CompetitionTeam,
+  foreignKey: "competitionID",
+});
+Competition.belongsToMany(Team, {
+  through: CompetitionTeam,
+  foreignKey: "teamID",
+});
 
 export default Team;

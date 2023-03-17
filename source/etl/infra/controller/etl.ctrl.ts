@@ -2,6 +2,7 @@ import { GraphQLError } from "graphql";
 import { EtlPostgresUseCase } from "../../application/etl-postgres-usecase";
 import { EtlUseCase } from "../../application/etl-usecase";
 import { CompetitionValue } from "../../domain/competition.value";
+import { CompetitionTeamValue } from "../../domain/competitionTeam.value";
 import { PlayerValue } from "../../domain/player.value";
 import { TeamValue } from "../../domain/team.value";
 
@@ -31,7 +32,7 @@ export class EtlController {
         competitionInfo.area.name
       );
 
-      const oListTeamsByCompetition = teamPlayersInfo.teams.map((team: any) => {
+      const oListTeams = teamPlayersInfo.teams.map((team: any) => {
         const oTeam = new TeamValue(
           team.id,
           team.name,
@@ -43,6 +44,14 @@ export class EtlController {
 
         return oTeam;
       }) as TeamValue[];
+
+      const oListTeamCompetition = teamPlayersInfo.teams.map((team: any) => {
+        const oTeamCompetition = new CompetitionTeamValue(
+          team.id,
+          competitionInfo.id
+        );
+        return oTeamCompetition;
+      });
 
       const oListPlayersByTeam = teamPlayersInfo.teams.map((team: any) => {
         const squad = team.squad.map((squad: any) => {
@@ -61,8 +70,11 @@ export class EtlController {
 
       try {
         await this.etlPostgresUseCase.saveCompetitionInfo(oCompetition);
-        await this.etlPostgresUseCase.saveTeamInfo(oListTeamsByCompetition);
+        await this.etlPostgresUseCase.saveTeamInfo(oListTeams);
         await this.etlPostgresUseCase.savePlayerInfo(oListPlayersByTeam.flat());
+        await this.etlPostgresUseCase.saveCompetitionTeamInfo(
+          oListTeamCompetition
+        );
       } catch (error) {
         console.log("error", error);
       }

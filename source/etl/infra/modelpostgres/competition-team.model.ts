@@ -1,30 +1,29 @@
 import {
   CreationOptional,
   DataTypes,
+  ForeignKey,
   InferAttributes,
   InferCreationAttributes,
   Model,
-  UpsertOptions,
 } from "sequelize";
 
 import sequelizeConnection from "../../../common/dbConnection";
-import CompetitionTeam from "./competition-team.model";
+import Competition from "./competition.model";
 import Team from "./team.model";
 
-class Competition extends Model<
-  InferAttributes<Competition>,
-  InferCreationAttributes<Competition>
+class CompetitionTeam extends Model<
+  InferAttributes<CompetitionTeam>,
+  InferCreationAttributes<CompetitionTeam>
 > {
   declare id: CreationOptional<number>;
-  declare name: String;
-  declare code: String;
-  declare areaName: String;
+  declare competitionID: ForeignKey<Competition["id"]>;
+  declare teamID: ForeignKey<Team["id"]>;
 
   declare createdAt: CreationOptional<Date>;
   declare updatedAt: CreationOptional<Date>;
 }
 
-Competition.init(
+CompetitionTeam.init(
   {
     id: {
       allowNull: false,
@@ -32,23 +31,21 @@ Competition.init(
       autoIncrement: true,
       type: DataTypes.INTEGER,
     },
-    name: {
-      type: DataTypes.STRING,
-      unique: true,
+    competitionID: {
+      type: DataTypes.INTEGER,
+      unique: "compositeIndex",
     },
-    code: {
-      type: DataTypes.STRING,
-    },
-    areaName: {
-      type: DataTypes.STRING,
+    teamID: {
+      type: DataTypes.INTEGER,
+      unique: "compositeIndex",
     },
     createdAt: { type: DataTypes.DATE },
     updatedAt: { type: DataTypes.DATE },
   },
   {
     sequelize: sequelizeConnection,
-    tableName: "competition",
+    tableName: "competitionteam",
   }
 );
 
-export default Competition;
+export default CompetitionTeam;
