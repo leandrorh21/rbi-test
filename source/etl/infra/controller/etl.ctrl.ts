@@ -1,4 +1,5 @@
 import { GraphQLError } from "graphql";
+import { EtlPostgresUseCase } from "../../application/etl-postgres-usecase";
 import { EtlUseCase } from "../../application/etl-usecase";
 import { CompetitionValue } from "../../domain/competition.value";
 import { PlayerValue } from "../../domain/player.value";
@@ -6,8 +7,10 @@ import { TeamValue } from "../../domain/team.value";
 
 export class EtlController {
   private readonly etlUseCase: EtlUseCase;
-  constructor(etlUseCase: EtlUseCase) {
+  private readonly etlPostgresUseCase: EtlPostgresUseCase;
+  constructor(etlUseCase: EtlUseCase, etlPostgresUseCase: EtlPostgresUseCase) {
     this.etlUseCase = etlUseCase;
+    this.etlPostgresUseCase = etlPostgresUseCase;
   }
 
   migrateLeague = async (leagueName: String) => {
@@ -15,6 +18,8 @@ export class EtlController {
       const competitionInfo = await this.etlUseCase.getCompetitionInfoApi(
         leagueName
       );
+
+      // SI NO EXISTE RETORNAR UN ERROR!
 
       const teamPlayersInfo = await this.etlUseCase.getTeamPlayersInfoApi(
         leagueName
@@ -28,6 +33,7 @@ export class EtlController {
 
       const oListTeamsByCompetition = teamPlayersInfo.teams.map((team: any) => {
         const oTeam = new TeamValue(
+          team.id,
           team.name,
           team.tla,
           team.shortName,
@@ -52,6 +58,14 @@ export class EtlController {
         }) as [];
         return squad.flat();
       }) as PlayerValue[];
+
+      try {
+        await this.etlPostgresUseCase.saveCompetitionInfo(oCompetition);
+        await this.etlPostgresUseCase.saveTeamInfo(oListTeamsByCompetition);
+        await this.etlPostgresUseCase.savePlayerInfo(oListPlayersByTeam.flat());
+      } catch (error) {
+        console.log("error", error);
+      }
 
       return {
         message: "OK",

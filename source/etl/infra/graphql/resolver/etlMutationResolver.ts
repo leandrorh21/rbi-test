@@ -1,14 +1,20 @@
-import { ExternalCompetitionRepository } from "../../repository/competition.extapi";
+import { ExternalEtlRepository } from "../../repository/futball.extapi";
 import { EtlUseCase } from "../../../application/etl-usecase";
 import { EtlController } from "../../controller/etl.ctrl";
+import { PostgresEtlRepository } from "../../repository/futball.postgres";
+import { EtlPostgresUseCase } from "../../../application/etl-postgres-usecase";
 
 interface MutationMigrateLeagueArgs {
   leagueName: String;
 }
 
-const externalCompetitionRepository = new ExternalCompetitionRepository();
-const etlUseCase = new EtlUseCase(externalCompetitionRepository);
-const etlController = new EtlController(etlUseCase);
+const externalEtlRepository = new ExternalEtlRepository();
+const etlUseCase = new EtlUseCase(externalEtlRepository);
+
+const postgresEtlRepository = new PostgresEtlRepository();
+const etlPostgresUseCase = new EtlPostgresUseCase(postgresEtlRepository);
+
+const etlController = new EtlController(etlUseCase, etlPostgresUseCase);
 
 export default {
   Mutation: {

@@ -3,7 +3,7 @@ import { CompetitionValue } from "../../domain/competition.value";
 import { EtlRepository } from "../../domain/etlRepository";
 import { TeamValue } from "../../domain/team.value";
 
-export class ExternalCompetitionRepository implements EtlRepository {
+export class ExternalEtlRepository implements EtlRepository {
   async getCompetitionInfoApi(leagueName: String): Promise<any> {
     const competitionFullData = await axios.get(
       `https://api.football-data.org/v4/competitions/${leagueName}`,

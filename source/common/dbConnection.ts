@@ -1,6 +1,6 @@
 import { Dialect, Sequelize } from "sequelize";
 
-const sequelizeConnection = new Sequelize("cookunity", "leandro", "asdfgh", {
+const sequelizeConnection = new Sequelize("rbidb", "leandro", "asdfgh", {
   host: "localhost",
   dialect: "postgres" as Dialect,
   logging: false,
