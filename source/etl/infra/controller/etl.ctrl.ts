@@ -27,6 +27,7 @@ export class EtlController {
       );
 
       const oCompetition = new CompetitionValue(
+        competitionInfo.id,
         competitionInfo.name,
         competitionInfo.code,
         competitionInfo.area.name
@@ -56,6 +57,7 @@ export class EtlController {
       const oListPlayersByTeam = teamPlayersInfo.teams.map((team: any) => {
         const squad = team.squad.map((squad: any) => {
           const oPlayer = new PlayerValue(
+            squad.id,
             squad.name,
             squad.position,
             squad.dateOfBirth,
