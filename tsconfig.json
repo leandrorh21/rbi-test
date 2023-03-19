@@ -25,6 +25,7 @@
     // "pretty": true,
     // "rootDir": "."
   },
+  "ts-node": { "files": true },
   "include": ["source/**/*.ts", "test/**/*.test.ts"],
   "exclude": ["node_modules"]
 }
