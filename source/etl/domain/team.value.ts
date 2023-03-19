@@ -1,3 +1,5 @@
+import { PlayerValue } from "./player.value";
+
 export class TeamValue {
   id: number;
   name: String;
@@ -5,6 +7,7 @@ export class TeamValue {
   shortName: String;
   areaName: String;
   address: String;
+  Players?: PlayerValue[];
 
   constructor(
     id: number,
@@ -12,7 +15,8 @@ export class TeamValue {
     tla: String,
     shortName: String,
     areaName: String,
-    address: String
+    address: String,
+    Players?: PlayerValue[]
   ) {
     this.id = id;
     this.name = name;
@@ -20,5 +24,6 @@ export class TeamValue {
     this.shortName = shortName;
     this.areaName = areaName;
     this.address = address;
+    this.Players = Players;
   }
 }

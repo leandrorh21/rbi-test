@@ -105,10 +105,28 @@ export class EtlController {
         leagueCode,
         teamName
       );
+
       if (players.length === 0) {
         throw new GraphQLError("The given league doesn't exist.");
       } else {
         return players;
+      }
+    } catch (error) {
+      throw new GraphQLError(error);
+    }
+  };
+
+  getTeams = async (teamName: String, showPlayers?: Boolean) => {
+    try {
+      const teams = await this.etlPostgresUseCase.getTeams(
+        teamName,
+        showPlayers
+      );
+
+      if (!teams) {
+        throw new GraphQLError("The given team doesn't exist.");
+      } else {
+        return teams;
       }
     } catch (error) {
       throw new GraphQLError(error);

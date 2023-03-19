@@ -9,4 +9,5 @@ export interface EtlPostgresRepository {
   savePlayer(players: PlayerValue[]): Promise<void>;
   saveCompetitionTeam(competitionTeams: CompetitionTeamValue[]): Promise<void>;
   getPlayers(leagueCode: String, teamName?: String): Promise<PlayerValue[]>;
+  getTeams(teamName: String, showPlayers?: Boolean): Promise<TeamValue>;
 }

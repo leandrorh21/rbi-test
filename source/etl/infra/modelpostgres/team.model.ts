@@ -4,11 +4,13 @@ import {
   InferAttributes,
   InferCreationAttributes,
   Model,
+  NonAttribute,
 } from "sequelize";
 
 import sequelizeConnection from "../../../common/dbConnection";
 import CompetitionTeam from "./competition-team.model";
 import Competition from "./competition.model";
+import Player from "./player.model";
 
 class Team extends Model<InferAttributes<Team>, InferCreationAttributes<Team>> {
   declare id: CreationOptional<number>;
@@ -17,6 +19,8 @@ class Team extends Model<InferAttributes<Team>, InferCreationAttributes<Team>> {
   declare shortName: String;
   declare areaName: String;
   declare address: String;
+
+  declare Player: NonAttribute<Player[]>;
 
   declare createdAt: CreationOptional<Date>;
   declare updatedAt: CreationOptional<Date>;

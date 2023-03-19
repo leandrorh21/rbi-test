@@ -8,9 +8,14 @@ interface MigrateLeagueArgs {
   leagueCode: String;
 }
 
-interface QueryLeagueArgs {
+interface QueryPlayersLeagueArgs {
   leagueCode: String;
   teamName?: String;
+}
+
+interface QueryTeamLeagueArgs {
+  teamName: String;
+  showPlayers?: Boolean;
 }
 
 const externalEtlRepository = new ExternalEtlRepository();
@@ -23,9 +28,14 @@ const etlController = new EtlController(etlUseCase, etlPostgresUseCase);
 
 export default {
   Query: {
-    getPlayers: async (_: any, args: QueryLeagueArgs) => {
+    getPlayers: async (_: any, args: QueryPlayersLeagueArgs) => {
       const { leagueCode, teamName } = args;
       return await etlController.getPlayers(leagueCode, teamName);
+    },
+
+    getTeams: async (_: any, args: QueryTeamLeagueArgs) => {
+      const { teamName, showPlayers } = args;
+      return await etlController.getTeams(teamName, showPlayers);
     },
   },
   Mutation: {

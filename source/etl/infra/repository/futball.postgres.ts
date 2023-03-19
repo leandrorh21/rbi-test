@@ -49,4 +49,33 @@ export class PostgresEtlRepository implements EtlPostgresRepository {
 
     return JSON.parse(JSON.stringify(dataPlayers));
   }
+
+  async getTeams(
+    teamName: String,
+    showPlayers?: Boolean | undefined
+  ): Promise<TeamValue> {
+    let dataTeams: Team | null;
+
+    if (showPlayers) {
+      dataTeams = await Team.findOne({
+        where: {
+          name: teamName,
+        },
+        include: [
+          {
+            model: Player,
+            as: "Players",
+          },
+        ],
+      });
+    } else {
+      dataTeams = await Team.findOne({
+        where: {
+          name: teamName,
+        },
+      });
+    }
+
+    return JSON.parse(JSON.stringify(dataTeams));
+  }
 }

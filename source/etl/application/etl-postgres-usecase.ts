@@ -36,4 +36,11 @@ export class EtlPostgresUseCase {
   ): Promise<PlayerValue[]> => {
     return await this.etlPostgresRepository.getPlayers(leagueCode, teamName);
   };
+
+  public getTeams = async (
+    teamName: String,
+    showPlayers?: Boolean
+  ): Promise<TeamValue> => {
+    return await this.etlPostgresRepository.getTeams(teamName, showPlayers);
+  };
 }

@@ -2,6 +2,7 @@ export default `#graphql
 
   type Query{
     getPlayers(leagueCode: String!, teamName: String): [Player!]
+    getTeams(teamName:String!, showPlayers: Boolean) : Team!
   }
 
   type Mutation {
@@ -19,6 +20,7 @@ export default `#graphql
     shortName: String
     areaName: String
     address: String
+    Players: [Player!]
   }
 
   type Player {
