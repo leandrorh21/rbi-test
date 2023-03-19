@@ -1,3 +1,4 @@
+import { randomInt } from "crypto";
 import { GraphQLError } from "graphql";
 import { EtlPostgresUseCase } from "../../application/etl-postgres-usecase";
 import { EtlUseCase } from "../../application/etl-usecase";
@@ -14,16 +15,16 @@ export class EtlController {
     this.etlPostgresUseCase = etlPostgresUseCase;
   }
 
-  migrateLeague = async (leagueName: String) => {
+  migrateLeague = async (leagueCode: String) => {
     try {
       const competitionInfo = await this.etlUseCase.getCompetitionInfoApi(
-        leagueName
+        leagueCode
       );
 
       // SI NO EXISTE RETORNAR UN ERROR!
 
       const teamPlayersInfo = await this.etlUseCase.getTeamPlayersInfoApi(
-        leagueName
+        leagueCode
       );
 
       const oCompetition = new CompetitionValue(
@@ -55,19 +56,28 @@ export class EtlController {
       });
 
       const oListPlayersByTeam = teamPlayersInfo.teams.map((team: any) => {
-        const squad = team.squad.map((squad: any) => {
+        if (team.squad.length === 0 || !team.squad) {
           const oPlayer = new PlayerValue(
-            squad.id,
-            squad.name,
-            squad.position,
-            squad.dateOfBirth,
-            squad.nationality,
+            team.coach.name,
+            team.coach.dateOfBirth,
+            team.coach.nationality,
             team.id
           );
 
           return oPlayer;
-        }) as [];
-        return squad.flat();
+        } else {
+          const squad = team.squad.map((squad: any) => {
+            const oPlayer = new PlayerValue(
+              squad.name,
+              squad.dateOfBirth,
+              squad.nationality,
+              team.id,
+              squad.position
+            );
+            return oPlayer;
+          }) as PlayerValue[];
+          return squad.flat();
+        }
       }) as PlayerValue[];
 
       try {
@@ -78,12 +88,28 @@ export class EtlController {
           oListTeamCompetition
         );
       } catch (error) {
-        console.log("error", error);
+        throw new GraphQLError(error);
       }
 
       return {
         message: "OK",
       };
+    } catch (error) {
+      throw new GraphQLError(error);
+    }
+  };
+
+  getPlayers = async (leagueCode: String, teamName?: String) => {
+    try {
+      const players = await this.etlPostgresUseCase.getPlayers(
+        leagueCode,
+        teamName
+      );
+      if (players.length === 0) {
+        throw new GraphQLError("The given league doesn't exist.");
+      } else {
+        return players;
+      }
     } catch (error) {
       throw new GraphQLError(error);
     }

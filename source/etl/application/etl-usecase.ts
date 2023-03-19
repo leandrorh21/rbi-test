@@ -8,16 +8,16 @@ export class EtlUseCase {
     this.etlRepository = etlRepository;
   }
 
-  public getCompetitionInfoApi = async (leagueName: String): Promise<any> => {
+  public getCompetitionInfoApi = async (leagueCode: String): Promise<any> => {
     const futballInfoApi = await this.etlRepository.getCompetitionInfoApi(
-      leagueName
+      leagueCode
     );
     return futballInfoApi;
   };
 
-  public getTeamPlayersInfoApi = async (leagueName: String): Promise<any> => {
+  public getTeamPlayersInfoApi = async (leagueCode: String): Promise<any> => {
     const teamPlayersInfoApi = await this.etlRepository.getTeamPlayersInfoApi(
-      leagueName
+      leagueCode
     );
     return teamPlayersInfoApi;
   };

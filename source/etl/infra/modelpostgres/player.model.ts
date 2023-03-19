@@ -5,6 +5,7 @@ import {
   InferCreationAttributes,
   Model,
   ForeignKey,
+  NonAttribute,
 } from "sequelize";
 
 import sequelizeConnection from "../../../common/dbConnection";
@@ -16,10 +17,12 @@ class Player extends Model<
 > {
   declare id: CreationOptional<number>;
   declare name: String;
-  declare position: String;
+  declare position: CreationOptional<String>;
   declare dateOfBirth: String;
   declare nationality: String;
+
   declare teamID: ForeignKey<Team["id"]>;
+  declare Team: NonAttribute<Team>;
 
   declare createdAt: CreationOptional<Date>;
   declare updatedAt: CreationOptional<Date>;
@@ -35,7 +38,7 @@ Player.init(
     },
     name: {
       type: DataTypes.STRING,
-      unique: true,
+      unique: "compositeIndex",
     },
     position: {
       type: DataTypes.STRING,
@@ -48,6 +51,7 @@ Player.init(
     },
     teamID: {
       type: DataTypes.INTEGER,
+      unique: "compositeIndex",
     },
     createdAt: { type: DataTypes.DATE },
     updatedAt: { type: DataTypes.DATE },

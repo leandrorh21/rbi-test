@@ -26,4 +26,27 @@ export class PostgresEtlRepository implements EtlPostgresRepository {
       updateOnDuplicate: ["teamID", "competitionID"],
     });
   }
+
+  async getPlayers(
+    leagueCode: String,
+    teamName?: String
+  ): Promise<PlayerValue[]> {
+    const dataPlayers = (await Player.findAll({
+      where: {
+        "$Team.Competition.code$": leagueCode,
+        ...(teamName && {
+          "$Team.name$": teamName,
+        }),
+      },
+      include: [
+        {
+          model: Team,
+          as: "Team",
+          include: [{ model: Competition, as: "Competition" }],
+        },
+      ],
+    })) as PlayerValue[];
+
+    return JSON.parse(JSON.stringify(dataPlayers));
+  }
 }

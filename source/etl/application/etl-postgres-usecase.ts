@@ -29,4 +29,11 @@ export class EtlPostgresUseCase {
   ): Promise<void> => {
     await this.etlPostgresRepository.saveCompetitionTeam(competitionTeams);
   };
+
+  public getPlayers = async (
+    leagueCode: String,
+    teamName?: String
+  ): Promise<PlayerValue[]> => {
+    return await this.etlPostgresRepository.getPlayers(leagueCode, teamName);
+  };
 }

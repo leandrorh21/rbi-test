@@ -1,8 +1,8 @@
 import { mergeResolvers } from "@graphql-tools/merge";
 
-import etlResolverMutation from "../etl/infra/graphql/resolver/etlMutationResolver";
+import etlResolver from "../etl/infra/graphql/resolver/etlResolver";
 
-const arrayResolvers = [etlResolverMutation];
+const arrayResolvers = [etlResolver];
 
 const mergedResolvers = mergeResolvers(arrayResolvers);
 

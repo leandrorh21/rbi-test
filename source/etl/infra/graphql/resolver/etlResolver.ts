@@ -4,8 +4,13 @@ import { EtlController } from "../../controller/etl.ctrl";
 import { PostgresEtlRepository } from "../../repository/futball.postgres";
 import { EtlPostgresUseCase } from "../../../application/etl-postgres-usecase";
 
-interface MutationMigrateLeagueArgs {
-  leagueName: String;
+interface MigrateLeagueArgs {
+  leagueCode: String;
+}
+
+interface QueryLeagueArgs {
+  leagueCode: String;
+  teamName?: String;
 }
 
 const externalEtlRepository = new ExternalEtlRepository();
@@ -17,10 +22,16 @@ const etlPostgresUseCase = new EtlPostgresUseCase(postgresEtlRepository);
 const etlController = new EtlController(etlUseCase, etlPostgresUseCase);
 
 export default {
+  Query: {
+    getPlayers: async (_: any, args: QueryLeagueArgs) => {
+      const { leagueCode, teamName } = args;
+      return await etlController.getPlayers(leagueCode, teamName);
+    },
+  },
   Mutation: {
-    migrateLeague: async (_: any, args: MutationMigrateLeagueArgs) => {
-      const { leagueName } = args;
-      return await etlController.migrateLeague(leagueName);
+    migrateLeague: async (_: any, args: MigrateLeagueArgs) => {
+      const { leagueCode } = args;
+      return await etlController.migrateLeague(leagueCode);
     },
   },
 };

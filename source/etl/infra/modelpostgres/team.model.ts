@@ -57,11 +57,13 @@ Team.init(
 
 Team.belongsToMany(Competition, {
   through: CompetitionTeam,
-  foreignKey: "competitionID",
+  foreignKey: "teamID",
+  as: "Competition",
 });
 Competition.belongsToMany(Team, {
   through: CompetitionTeam,
-  foreignKey: "teamID",
+  foreignKey: "competitionID",
+  as: "Team",
 });
 
 export default Team;
