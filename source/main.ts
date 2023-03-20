@@ -22,3 +22,5 @@ const startServer = async () => {
 };
 
 startServer().then((url) => console.log(`🚀  Server ready at: ${url}`));
+
+export { server };

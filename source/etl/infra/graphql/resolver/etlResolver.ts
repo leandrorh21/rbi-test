@@ -28,6 +28,9 @@ const etlController = new EtlController(etlUseCase, etlPostgresUseCase);
 
 export default {
   Query: {
+    health: () => {
+      return true;
+    },
     getPlayers: async (_: any, args: QueryPlayersLeagueArgs) => {
       const { leagueCode, teamName } = args;
       return await etlController.getPlayers(leagueCode, teamName);

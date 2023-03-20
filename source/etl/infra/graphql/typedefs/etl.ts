@@ -1,6 +1,7 @@
 export default `#graphql
 
   type Query{
+    health: Boolean
     getPlayers(leagueCode: String!, teamName: String): [Player!]
     getTeams(teamName:String!, showPlayers: Boolean) : Team!
   }
