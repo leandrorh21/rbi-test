@@ -1,86 +1,61 @@
-# GraphQLSubscription
+# Test RBI
 
-Nintendo backend in javascript
+Test for RBI
 
 ## Technologies used
 
-- NodeJS (asynchronous event-driven JavaScript runtime)
-- Express (REST Server)
+- NodeJS (v.16.16.0)
+- Typescript
 - GraphQl (Query language API)
 - Sequelize (ORM for Postgres)
+- Jest
+- Docker
+- Docker Compose
 
 ## Commands
 
 ### Run the project
 
-1. Clone the repository
+1. Clone the repository (HTTPS)
 
 ```bash
-git clone https://github.com/Chazki/GraphQlSubscription.git
+https://github.com/leandrorh21/rbi-test.git
 ```
 
-2.  Install the dependecies
+2. Clone the repository (SSH)
+
+```bash
+git@github.com:leandrorh21/rbi-test.git
+```
+
+### Run localy
+
+1. Install dependencies (use yarn)
 
 ```bash
 yarn install
 ```
 
-3. Run the project
+2. COPY .env file in project root
+
+3. Run command
 
 ```bash
- yarn start
+yarn start:dev
 ```
 
-### Migrate tables
+### Run containers
 
-- Delete all tables mapped in sequelize
+1. Copy .envContainer file in project root
+
+2. Run command
 
 ```bash
-yarn seed
+docker compose up -d
 ```
 
-- Create tables mapped in the migrations files
+3. Restore database backup
 
 ```bash
-yarn migrate
-```
-
-- Insert default data of the seeders files
-
-```bash
-yarn seed
-```
-
-- Clean the database, create tables and insert default data
-
-```bash
-yarn wipe
-```
-
-## File structure
-
-```bash
-.
-├── src                                   #source files of the project
-│   ├── config                            #configurations directory for sequelize and AWS service
-│   ├── http
-│   │   ├── graphQl                       #directory with GrapQl configurations
-│   │   │   ├── attributesReplacements    #Attributes of the tables
-│   │   │   ├── models                    #directory with all models, typedefs and resolvers of graphQl
-│   │   │   ├── utils                     #Miscellaneous functions for graphQl models
-│   │   │   └── index.js                  #principal file with all configurations for GraphQl
-│   │   └── pdf
-│   ├── sequelize
-│   │   ├── config                        #configurations of sequelize
-│   │   ├── dataSources                   #files with data for the seeders
-│   │   ├── migrations                    #directory with files for the creations of tables with sequelize
-│   │   ├── models                        #Files with Table estructure, use in queries and mutations
-│   │   ├── seeders
-│   │   │   └── dev                       #Files with the default data for the tables
-│   │   └── utils
-│   │   │   └── tableNames.js             #names for the tables
-│   ├── services
-│   │   └── aws                           #functions and templates for the aws services
-│   ├── triggers
-└──── utils
+cat backup-test-rbi | docker exec -i rbi-test-db-postgres-1 psql -U leandro
 ```
