@@ -2,6 +2,16 @@
 
 Test for RBI
 
+## Project explanation
+
+The idea which I followed was center de project in DDD estructure with Clean Architecture. Based on that, I started to define my models and main classes which would be the support of all the forward logic.
+
+Also the database that i decided to use was postgres.
+
+The folder "etl" contains all the logic and it is divide itself into 3 folders. "application" which contains the use cases. "domain" which containt all classes and types definition. "infra" which contains controllers and resolvers of graphl.
+
+I decided to use docker and docker compose as containerization type.
+
 ## Technologies used
 
 - NodeJS (v.16.16.0)
@@ -11,8 +21,6 @@ Test for RBI
 - Jest
 - Docker
 - Docker Compose
-
-## Commands
 
 ### Clone the project
 
