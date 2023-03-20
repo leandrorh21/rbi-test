@@ -1,0 +1,31 @@
+version: "3.9"
+services:
+  db-postgres:
+    image: postgres:15.1-alpine
+    environment:
+      - POSTGRES_USER=leandro
+      - POSTGRES_PASSWORD=asdfgh
+    ports:
+      - "5431:5432"
+    volumes:
+      - db2:/var/lib/postgresql/data
+    networks:
+      - rbitest
+  api:
+    build: .
+    env_file:
+      - .env
+    stdin_open: true
+    tty: true
+    depends_on:
+      - db-postgres
+    ports:
+      - "4000:4002"
+    networks:
+      - rbitest
+volumes:
+  db2:
+    driver: local
+networks:
+  rbitest:
+    driver: bridge
