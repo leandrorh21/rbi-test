@@ -14,7 +14,7 @@ Test for RBI
 
 ## Commands
 
-### Run the project
+### Clone the project
 
 1. Clone the repository (HTTPS)
 
@@ -44,6 +44,12 @@ yarn install
 yarn start:dev
 ```
 
+4. Enter to
+
+```bash
+http://localhost:4002
+```
+
 ### Run containers
 
 1. Copy .envContainer file in project root
@@ -58,4 +64,24 @@ docker compose up -d
 
 ```bash
 cat backup-test-rbi | docker exec -i rbi-test-db-postgres-1 psql -U leandro
+```
+
+4. Enter to
+
+```bash
+http://localhost:4000
+```
+
+### Run tests
+
+1. Install dependencies
+
+```bash
+yarn install
+```
+
+1. Run command
+
+```bash
+yarn test
 ```
