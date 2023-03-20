@@ -38,6 +38,8 @@ git@github.com:leandrorh21/rbi-test.git
 
 ### Run localy
 
+Note: If you want to run localy you must have a postgres instance running in your computer. And change the values of .env file to references your instance.
+
 1. Install dependencies (use yarn)
 
 ```bash
