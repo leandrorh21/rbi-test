@@ -1,4 +1,4 @@
-import { server } from "../source/main";
+import { server } from "../source/createApolloServer";
 
 describe("suit for test ETL queries", () => {
   it("runs a query to get players of leage", async () => {

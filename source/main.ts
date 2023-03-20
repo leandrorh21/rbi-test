@@ -1,26 +1,13 @@
-import { ApolloServer } from "@apollo/server";
 import { startStandaloneServer } from "@apollo/server/standalone";
 
-import { mergedTypeDefs } from "./common/graphqlSchema";
-import { mergedResolvers } from "./common/graphqlResolvers";
+import { server } from "./createApolloServer";
 
-import dotenv from "dotenv";
+const startServer = async () => {
+  const { url } = await startStandaloneServer(server, {
+    listen: { port: process.env.PORT as number | undefined },
+  });
 
-dotenv.config();
+  return url;
+};
 
-const server = new ApolloServer({
-  typeDefs: mergedTypeDefs,
-  resolvers: mergedResolvers,
-});
-
-// const startServer = async () => {
-//   const { url } = await startStandaloneServer(server, {
-//     listen: { port: process.env.PORT as number | undefined },
-//   });
-
-//   return url;
-// };
-
-// startServer().then((url) => console.log(`🚀  Server ready at: ${url}`));
-
-export { server };
+startServer().then((url) => console.log(`🚀  Server ready at: ${url}`));

@@ -1,4 +1,4 @@
-import { server } from "../source/main";
+import { server } from "../source/createApolloServer";
 
 it("runs a health check agains graphql schema", async () => {
   const response = await server.executeOperation({
