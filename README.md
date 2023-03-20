@@ -80,7 +80,7 @@ http://localhost:4000
 yarn install
 ```
 
-1. Run command
+2. Run command
 
 ```bash
 yarn test
