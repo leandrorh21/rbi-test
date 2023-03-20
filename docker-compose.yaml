@@ -14,7 +14,7 @@ services:
   api:
     build: .
     env_file:
-      - .env
+      - .envContainer
     stdin_open: true
     tty: true
     depends_on:

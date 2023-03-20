@@ -13,14 +13,14 @@ const server = new ApolloServer({
   resolvers: mergedResolvers,
 });
 
-const startServer = async () => {
-  const { url } = await startStandaloneServer(server, {
-    listen: { port: process.env.PORT as number | undefined },
-  });
+// const startServer = async () => {
+//   const { url } = await startStandaloneServer(server, {
+//     listen: { port: process.env.PORT as number | undefined },
+//   });
 
-  return url;
-};
+//   return url;
+// };
 
-startServer().then((url) => console.log(`🚀  Server ready at: ${url}`));
+// startServer().then((url) => console.log(`🚀  Server ready at: ${url}`));
 
 export { server };

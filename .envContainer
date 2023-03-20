@@ -1,0 +1,8 @@
+PORT=4002
+DATABASE_NAME=rbidb
+DATABASE_USER=leandro
+DATABASE_PASSWORD=asdfgh
+DATABASE_HOST=rbi-test-db-postgres-1
+DATABASE_PORT=5432
+EXT_API_URL=https://api.football-data.org/v4/competitions/
+AUTH_EXT_API_TOKEN=632dcd4c074a4389bb5b19284dc324fe
